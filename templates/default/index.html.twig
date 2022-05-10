@@ -18,5 +18,105 @@
     </ul>
 </div>
 
+        {% for list in lists %}
+
+    <!--carte liste 1-->
+    <div class="card m-5">
+        <div class="card-body container">
+
+            <!--definition  liste  + boutons action-->
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <div class="list-header row mb-2">
+                        <div class="col-auto list-title">
+                            <h5 class="card-title ">{{ list.name }}</h5>
+                        </div>
+
+                        <!--groupe icones d'action trash et edit-->
+                        <div class="btn-group col-auto px-0" role="group" aria-label="Basic example">
+
+                            <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#delListModal">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                            <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#editListModal">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--icone action ajout tache-->
+                <div class="col-auto">
+                    <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                        <i class="bi bi-plus-circle-fill"></i> Ajouter Tache
+                    </button>
+                </div>
+            </div>
+
+            <!--barre progression-->
+            <div class="progress border row mb-3">
+
+                <!--manque calcul des 2 param en fonction nb taches-->
+                <div class="progress-bar progress-bar-striped bg-info "
+                     role="progressbar" style="width: 50%" aria-valuenow="50"
+                     aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <!--tache 1 + bouton action -->
+            <div clas="row task">
+                <div class="form-check col task">
+                    <input class="form-check-input" type="checkbox" value="" id="task1">
+                    <label class="form-check-label " for="task1">
+                        Tache 1
+                    </label>
+                </div>
+                <!--groupe icones d'action trash et edit-->
+                <div class="btn-group col " role="group" aria-label="Basic example" >
+                    <button type="button" class="btn ps-0 pt-0 " data-bs-toggle="modal" data-bs-target="#delTaskModal">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#editTaskModal">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!--tache 2 générée par symphony-->
+            <div clas="row task">
+                <div class="form-check col task ">
+                    <input class="form-check-input" type="checkbox" value="" id="task2" checked>
+                    <label class="form-check-label" for="task2">
+                        Tache 2 avec un long texte
+                    </label>
+                </div>
+                <div class="btn-group col p-0" role="group" aria-label="Basic example">
+                    <button type="button" class="btn  ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#delTaskModal" >
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <button type="button" class="btn  ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#editTaskModal">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!--carte ajouter liste-->
+    <div class="card add-card m-5" >
+        <div class="card-body container">
+            <!--definition  liste  + boutons action-->
+            <div class="row justify-content-end">
+                <!--icone action ajout tache-->
+                <div class="col-auto">
+                    <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#addListModal">
+                        <i class="bi bi-plus-circle-fill"></i> Ajouter Liste
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block modal %}{% endblock %}
 
 {% endblock %}
+
+

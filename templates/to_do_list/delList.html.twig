@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="form">
+    <h5 class="modal-title" id="exampleModalLabel">Suppression liste</h5>
+
+    {{ form_start (formList) }}
+    <div class="m-3">
+        Voulez vous vraiment supprimer cette liste?
+
+    </div>
+    <div class="footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+        <button type="submit" class="btn btn-primary">Oui</button>
+    </div>
+
+    {{ form_end (formList) }}
+
+
+{% endblock %}

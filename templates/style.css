@@ -1,0 +1,18 @@
+.form{
+    width: 300px;
+}
+
+.task{
+    display: inline-block;
+}
+
+.card{
+    background-color: #5eb5e0;
+    width: 30rem;
+
+}
+.add-card{
+    height: 10rem;
+    border-style: dashed;
+    border-width: 3px;
+}

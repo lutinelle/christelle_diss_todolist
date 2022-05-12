@@ -3,20 +3,7 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/apps/eval-list/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/apps/eval-list/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
-    </ul>
-</div>
 
         {% for list in lists %}
 
@@ -35,20 +22,20 @@
                         <!--groupe icones d'action trash et edit-->
                         <div class="btn-group col-auto px-0" role="group" aria-label="Basic example">
 
-                            <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#delListModal">
-                                <i class="bi bi-trash-fill"></i>
-                            </button>
-                            <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#editListModal">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
+                            <a href="/delList/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                            <i class="bi bi-trash-fill"></i>
+                            </a>
+                            <a href="/updateList/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                            <i class="bi bi-pencil-square"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <!--icone action ajout tache-->
                 <div class="col-auto">
-                    <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#addTaskModal">
-                        <i class="bi bi-plus-circle-fill"></i> Ajouter Tache
-                    </button>
+                    <a href="/addTask" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                    <i class="bi bi-plus-circle-fill"></i> Ajouter Tache
+                    </a>
                 </div>
             </div>
 
@@ -71,12 +58,12 @@
                 </div>
                 <!--groupe icones d'action trash et edit-->
                 <div class="btn-group col " role="group" aria-label="Basic example" >
-                    <button type="button" class="btn ps-0 pt-0 " data-bs-toggle="modal" data-bs-target="#delTaskModal">
-                        <i class="bi bi-trash-fill"></i>
-                    </button>
-                    <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#editTaskModal">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
+                    <a href="/delTask" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                    <i class="bi bi-trash-fill"></i>
+                    </a>
+                    <a href="/updateTask" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                    <i class="bi bi-pencil-square"></i>
+                    </a>
                 </div>
             </div>
 
@@ -89,12 +76,13 @@
                     </label>
                 </div>
                 <div class="btn-group col p-0" role="group" aria-label="Basic example">
-                    <button type="button" class="btn  ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#delTaskModal" >
-                        <i class="bi bi-trash-fill"></i>
-                    </button>
-                    <button type="button" class="btn  ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#editTaskModal">
+                    <a href="/delTask" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+
+                    <i class="bi bi-trash-fill"></i>
+                    </a>
+                    <a href="/updateTask" class="btn ps-0 pt-0" role="button" aria-pressed="true">
                         <i class="bi bi-pencil-square"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -108,14 +96,13 @@
             <div class="row justify-content-end">
                 <!--icone action ajout tache-->
                 <div class="col-auto">
-                    <button type="button" class="btn ps-0 pt-0" data-bs-toggle="modal" data-bs-target="#addListModal">
-                        <i class="bi bi-plus-circle-fill"></i> Ajouter Liste
-                    </button>
+                    <a href="/addList" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                        <i class="bi bi-plus-circle-fill"></i> Ajouter Liste</a>
                 </div>
             </div>
         </div>
     </div>
-    {% block modal %}{% endblock %}
+
 
 {% endblock %}
 

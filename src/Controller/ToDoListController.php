@@ -74,10 +74,10 @@ class ToDoListController extends AbstractController
     public function delList(int $id, EntityManagerInterface $em): Response
     {
 
-        //update
+        //delete
         $listToDel = $em->getRepository(ToDoList::class)->find($id);
-            em->remove($listToDel);
-            em->flush;
+            $em->remove($listToDel);
+            $em->flush();
 
             return $this->redirectToRoute('index');
 

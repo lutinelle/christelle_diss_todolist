@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use App\Entity\ToDoList;
 use App\Form\ToDoListType;
+use App\Repository\TaskRepository;
 use App\Repository\ToDoListRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class ToDoListController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function readList(ToDoListRepository $toDoListRepository ): Response
+    public function readList(ToDoListRepository $toDoListRepository, TaskRepository $taskRepository ): Response
     {
 
         $lists = $toDoListRepository->findAll();
 
         return $this->render('to_do_list/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'lists'=>$lists
+            'lists'=>$lists,
         ]);
     }
 

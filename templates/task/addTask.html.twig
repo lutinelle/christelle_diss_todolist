@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="form">
+
+        <h5 class="title" >Creer Tache</h5>
+
+
+        {{ form_start (formTask) }}
+        <div class="m-3">
+            {{ form_row(formTask.name) }}
+        </div>
+        <div class="footer">
+            <a href="{{ path('index') }}" class="btn btn-secondary">Annuler</a>
+            <button type="submit" class="btn btn-primary">Creer</button>
+        </div>
+        {{ form_end (formTask) }}
+    </div>
+
+{% endblock %}

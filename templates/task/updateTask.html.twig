@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="form">
+    <h5 class="modal-title" id="exampleModalLabel">Edition tache</h5>
+
+    {{ form_start (formTask) }}
+    <div class="m-3">
+        <label for="exampleFormControlInput1" class="form-label">Entrez le nouveau nom de la tache</label>
+        {{ form_widget(formTask.name) }}
+    </div>
+    <div class="footer">
+
+        <a href="{{ path('index') }}" class="btn btn-secondary">Annuler</a>
+        <button type="submit" class="btn btn-primary">OK</button>
+    </div>
+    {{ form_end (formTask) }}
+
+
+{% endblock %}

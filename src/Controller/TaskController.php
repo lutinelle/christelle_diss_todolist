@@ -3,82 +3,65 @@
 namespace App\Controller;
 
 use App\Entity\Task;
-use App\Form\Task1Type;
-use App\Repository\TaskRepository;
+use App\Entity\ToDoList;
+use App\Form\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
-#[Route('/task')]
+
 class TaskController extends AbstractController
 {
-    #[Route('/', name: 'app_task_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
-    {
-        $tasks = $entityManager
-            ->getRepository(Task::class)
-            ->findAll();
 
-        return $this->render('task/index.html.twig', [
-            'tasks' => $tasks,
-        ]);
-    }
-
-    #[Route('/new', name: 'app_task_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/addTask/{id}', name: 'addTask')]
+    public function addTask(ToDoList $list, Request $request, EntityManagerInterface $em): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($task);
-            $entityManager->flush();
+            $task->setList($list);
+            $em->persist($task);
+            $em->flush();
 
-            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('index');
         }
 
-        return $this->renderForm('task/new.html.twig', [
+        return $this->renderForm('task/addTask.html.twig', [
             'task' => $task,
-            'form' => $form,
+            'formTask' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_task_show', methods: ['GET'])]
-    public function show(Task $task): Response
-    {
-        return $this->render('task/show.html.twig', [
-            'task' => $task,
-        ]);
-    }
 
-    #[Route('/{id}/edit', name: 'app_task_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Task $task, EntityManagerInterface $entityManager): Response
+    #[Route('/updateTask/{id}', name: 'updateTask')]
+    public function updateTask(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Task1Type::class, $task);
+        $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('index');
         }
 
-        return $this->renderForm('task/edit.html.twig', [
+        return $this->renderForm('task/updateTask.html.twig', [
             'task' => $task,
-            'form' => $form,
+            'formTask' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_task_delete', methods: ['POST'])]
-    public function delete(Request $request, Task $task, EntityManagerInterface $entityManager): Response
+    #[Route('/delTask/{id}', name: 'delTask')]
+    public function delTask(int $id,Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($task);
-            $entityManager->flush();
-        }
+        $TaskToDel = $em->getRepository(Task::class)->find($id);
+        $em->remove($TaskToDel);
+        $em->flush();
 
-        return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('index');
     }
 }

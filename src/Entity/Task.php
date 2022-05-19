@@ -17,7 +17,7 @@ class Task
     private $name;
 
     #[ORM\Column(type: 'boolean')]
-    private $state;
+    private $state =false;
 
     #[ORM\ManyToOne(targetEntity: ToDoList::class, inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]

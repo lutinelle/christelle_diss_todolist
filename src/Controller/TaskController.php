@@ -56,12 +56,20 @@ class TaskController extends AbstractController
     }
 
     #[Route('/delTask/{id}', name: 'delTask')]
-    public function delTask(int $id,Request $request, EntityManagerInterface $em): Response
+    public function delTask(int $id, EntityManagerInterface $em): Response
     {
         $TaskToDel = $em->getRepository(Task::class)->find($id);
         $em->remove($TaskToDel);
         $em->flush();
 
+        return $this->redirectToRoute('index');
+    }
+
+    #[Route('/updateTaskState/{id}', name: 'updateTaskState')]
+    public function updateTaskState( EntityManagerInterface $em, Task $TaskToUpdate): Response
+    {
+        $TaskToUpdate->setState(!$TaskToUpdate->getState());
+        $em->flush();
         return $this->redirectToRoute('index');
     }
 }

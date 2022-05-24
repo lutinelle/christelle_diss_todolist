@@ -42,17 +42,26 @@
             <!--barre progression-->
             <div class="progress border row mb-3">
 
-                <!--manque calcul des 2 param en fonction nb taches-->
+                <!--calcul des param progress bar
+                manque recuperation du nb de taches checkées par controller-->
+
+                {% set checkedTasksNb=1 %}
+                {% set pourcentage = checkedTasksNb*100/list.tasks|length %}
+
                 <div class="progress-bar progress-bar-striped bg-info "
-                     role="progressbar" style="width: 50%" aria-valuenow="50"
-                     aria-valuemin="0" aria-valuemax="100"></div>
+                     role="progressbar" style="width: {{pourcentage}}%" aria-valuenow="1"
+                     aria-valuemin="0" aria-valuemax="{{ list.tasks|length }}"></div>
+
             </div>
+
 
             <!--tache 1 + bouton action -->
             {% for task in list.tasks %}
+
             <div clas="row task">
                 <div class="form-check col task">
-                    <input class="form-check-input" type="checkbox" value="" id={{ task.Id }} {{ task.state? "checked" }}>
+                    <input class="form-check-input" type="checkbox" value="" id={{ task.Id }} {{ task.state? "checked" }}
+                    onchange="window.location.href='/updateTaskState/{{ task.id }}'">
                     <label class="form-check-label " for={{ task.Id }}>
                         {{ task.Name }}
                     </label>
@@ -85,7 +94,9 @@
             </div>
         </div>
     </div>
+<script>
 
+</script>
 
 {% endblock %}
 

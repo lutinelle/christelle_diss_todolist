@@ -47,20 +47,35 @@ class ToDoListRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return ToDoList[] Returns an array of ToDoList objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+    public function findToDOListWithTaskCount(): array
+    {
+    $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT  to_do_list.id, to_do_list.name, COUNT(task.id)
+                FROM to_do_list
+                JOIN task ON  task.list_id = to_do_list.id
+                GROUP BY to_do_list.id';
+                $stmt = $conn->prepare($sql);
+        $sqlResult = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $sqlResult->fetchAllAssociative();
+    }
+
+    public function findToDOListWithValidTask(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT  to_do_list.id, to_do_list.name, COUNT(task.id) AS tasknb
+                FROM to_do_list
+                JOIN task ON  task.list_id = to_do_list.id
+                WHERE task.state=1
+                GROUP BY to_do_list.id';
+        $stmt = $conn->prepare($sql);
+        $sqlResult = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $sqlResult->fetchAllAssociative();
+    }
 
 //    public function findOneBySomeField($value): ?ToDoList
 //    {

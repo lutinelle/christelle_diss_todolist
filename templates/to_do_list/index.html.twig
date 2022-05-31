@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
         {% for list in lists %}
 
     <!--carte liste 1-->
@@ -42,14 +41,19 @@
             <!--barre progression-->
             <div class="progress border row mb-3">
 
-                <!--calcul des param progress bar
-                manque recuperation du nb de taches checkées par controller-->
+                <!--calcul des param progress bar-->
+                {% set checkedTasksNb=0 %}
+                {% for listwithtaskchecked in checked %}
+                    {% if listwithtaskchecked.id == list.id%}
+                        {% set   checkedTasksNb=listwithtaskchecked.tasknb %}
+                    {% endif %}
+                {% endfor%}
 
-                {% set checkedTasksNb=1 %}
+
                 {% set pourcentage = checkedTasksNb*100/list.tasks|length %}
 
                 <div class="progress-bar progress-bar-striped bg-info "
-                     role="progressbar" style="width: {{pourcentage}}%" aria-valuenow="1"
+                     role="progressbar" style="width: {{pourcentage}}%" aria-valuenow={{checkedTasksNb}}
                      aria-valuemin="0" aria-valuemax="{{ list.tasks|length }}"></div>
 
             </div>

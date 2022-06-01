@@ -15,5 +15,10 @@
     height: 10rem;
     border-style: dashed;
     border-width: 3px;
-
+}
+.emergency-card{
+    width: 20rem;
+    border-color: red;
+    border-width: 3px;
+    background-color: lightcoral;
 }

@@ -1,101 +1,140 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Gestionnaire liste!{% endblock %}
 
 {% block body %}
 
-        {% for list in lists %}
 
-    <!--carte liste 1-->
-    <div class="card m-5">
-        <div class="card-body container">
+    <div class = "container">
+        <div class="row">
+            <div class="col">
 
-            <!--definition  liste  + boutons action-->
-            <div class="row justify-content-between">
-                <div class="col-auto">
-                    <div class="list-header row mb-2">
-                        <div class="col-auto list-title">
-                            <h5 class="card-title ">{{ list.name }}</h5>
+                {% for list in lists %}
+                <!--carte liste 1-->
+                <div class="card my-5 mx-auto">
+                    <div class="card-body container">
+
+                        <!--definition  liste  + boutons action-->
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                <div class="list-header row mb-2">
+                                    <div class="col-auto list-title">
+                                        <h5 class="card-title " id={{ list.Id }}>{{ list.name }}</h5>
+                                    </div>
+
+                                    <!--groupe icones d'action trash et edit-->
+                                    <div class="btn-group col-auto px-0" role="group" aria-label="Basic example">
+
+                                        <a href="/delList/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                        <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                        <a href="/updateList/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                        <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--icone action ajout tache-->
+                            <div class="col-auto">
+                                <a href="/addTask/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                <i class="bi bi-plus-circle-fill"></i> Ajouter Tache
+                                </a>
+                            </div>
                         </div>
 
-                        <!--groupe icones d'action trash et edit-->
-                        <div class="btn-group col-auto px-0" role="group" aria-label="Basic example">
+                        <!--barre progression-->
+                        <div class="progress border row mb-3">
 
-                            <a href="/delList/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                            <i class="bi bi-trash-fill"></i>
-                            </a>
-                            <a href="/updateList/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                            <i class="bi bi-pencil-square"></i>
-                            </a>
+                            <!--calcul des param progress bar-->
+                            {% set checkedTasksNb=0 %}
+                            {% for listwithtaskchecked in checked %}
+                                {% if listwithtaskchecked.id == list.id%}
+                                    {% set   checkedTasksNb=listwithtaskchecked.tasknb %}
+                                {% endif %}
+                            {% endfor%}
+
+
+                            <div class="progress-bar progress-bar-striped bg-info "
+                                 role="progressbar" style="width: {{ list.tasks|length? checkedTasksNb*100/list.tasks|length: 0 }}%" aria-valuenow={{checkedTasksNb}}
+                                 aria-valuemin="0" aria-valuemax="{{ list.tasks|length }}"></div>
+
+                        </div>
+
+
+                        <!--tache 1 + bouton action -->
+                        {% for task in list.tasks %}
+
+                        <div clas="row task">
+                            <div class="form-check col task">
+                                <input class="form-check-input" type="checkbox" value="" id={{ task.Id }} {{ task.state? "checked" }}
+                                onchange="window.location.href='/updateTaskState/{{ task.id }}'">
+                                <label class="form-check-label " for={{ task.Id }}>
+                                    {{ task.Name }}
+                                </label>
+                            </div>
+
+                            <!--groupe icones d'action trash et edit-->
+                            <div class="btn-group col " role="group" aria-label="Basic example" >
+                                <a href="/delTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                <i class="bi bi-trash-fill"></i>
+                                </a>
+                                <a href="/updateTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a href="/updateTaskUrgent/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                    {% if task.urgent %}
+                                    <i class="bi bi-exclamation-circle-fill btn-outline-danger"></i>
+                                    {% else %}
+                                        <i class="bi bi-exclamation-circle"></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <!--carte ajouter liste-->
+                <div class="card add-card my-5 mx-auto" >
+                    <div class="card-body container">
+                        <!--definition  liste  + boutons action-->
+                        <div class="row justify-content-end">
+                            <!--icone action ajout tache-->
+                            <div class="col-auto">
+                                <a href="/addList" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                    <i class="bi bi-plus-circle-fill"></i> Ajouter Liste</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!--icone action ajout tache-->
-                <div class="col-auto">
-                    <a href="/addTask/{{ list.id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                    <i class="bi bi-plus-circle-fill"></i> Ajouter Tache
-                    </a>
+
+
+            </div>
+            <div class="col">
+                <!--carte urgences  -->
+                <div class="card emergency-card my-5 mx-auto" >
+                    <div class="card-body container">
+                        <!--definition  liste  + boutons action-->
+                        <div class="row">
+                            <div class="col-auto">
+                                <h5 class="card-title ">Taches urgentes restantes</h5>
+
+                                {% for task in urgenttasks %}
+
+                                    <div clas="row task">
+                                        <div class="form-check col task">
+                                            <i class="bi bi-dot"></i>{{ task.name }} <a href="#{{ task.listid }}"  >({{ task.listename }})</a>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!--barre progression-->
-            <div class="progress border row mb-3">
-
-                <!--calcul des param progress bar-->
-                {% set checkedTasksNb=0 %}
-                {% for listwithtaskchecked in checked %}
-                    {% if listwithtaskchecked.id == list.id%}
-                        {% set   checkedTasksNb=listwithtaskchecked.tasknb %}
-                    {% endif %}
-                {% endfor%}
-
-
-                {% set pourcentage = checkedTasksNb*100/list.tasks|length %}
-
-                <div class="progress-bar progress-bar-striped bg-info "
-                     role="progressbar" style="width: {{pourcentage}}%" aria-valuenow={{checkedTasksNb}}
-                     aria-valuemin="0" aria-valuemax="{{ list.tasks|length }}"></div>
-
-            </div>
-
-
-            <!--tache 1 + bouton action -->
-            {% for task in list.tasks %}
-
-            <div clas="row task">
-                <div class="form-check col task">
-                    <input class="form-check-input" type="checkbox" value="" id={{ task.Id }} {{ task.state? "checked" }}
-                    onchange="window.location.href='/updateTaskState/{{ task.id }}'">
-                    <label class="form-check-label " for={{ task.Id }}>
-                        {{ task.Name }}
-                    </label>
-                </div>
-                <!--groupe icones d'action trash et edit-->
-                <div class="btn-group col " role="group" aria-label="Basic example" >
-                    <a href="/delTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                    <i class="bi bi-trash-fill"></i>
-                    </a>
-                    <a href="/updateTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                    <i class="bi bi-pencil-square"></i>
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% endfor %}
-
-    <!--carte ajouter liste-->
-    <div class="card add-card m-5" >
-        <div class="card-body container">
-            <!--definition  liste  + boutons action-->
-            <div class="row justify-content-end">
-                <!--icone action ajout tache-->
-                <div class="col-auto">
-                    <a href="/addList" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                        <i class="bi bi-plus-circle-fill"></i> Ajouter Liste</a>
-                </div>
-            </div>
         </div>
     </div>
 <script>

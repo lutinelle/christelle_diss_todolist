@@ -19,9 +19,15 @@ class Task
     #[ORM\Column(type: 'boolean')]
     private $state =false;
 
+
+
     #[ORM\ManyToOne(targetEntity: ToDoList::class, inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
     private $List;
+
+    #[ORM\Column(type: 'boolean')]
+    private $urgent =false;
+
 
 
     public function getId(): ?int
@@ -53,6 +59,9 @@ class Task
         return $this;
     }
 
+
+
+
     public function getList(): ?ToDoList
     {
         return $this->List;
@@ -61,6 +70,18 @@ class Task
     public function setList(?ToDoList $List): self
     {
         $this->List = $List;
+
+        return $this;
+    }
+
+    public function getUrgent(): ?bool
+    {
+        return $this->urgent;
+    }
+
+    public function setUrgent(bool $urgent): self
+    {
+        $this->urgent = $urgent;
 
         return $this;
     }

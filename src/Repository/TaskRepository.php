@@ -48,29 +48,21 @@ class TaskRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @return Task[] Returns an array of Task objects
+     */
+    public function findByUrgent(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT  task.id, task.name, task.state, to_do_list.name AS listename, to_do_list.id AS listid
+                FROM task
+                JOIN to_do_list ON  to_do_list.id = task.list_id
+                WHERE task.urgent=1 AND task.state=0' ;
+        $stmt = $conn->prepare($sql);
+        $sqlResult = $stmt->executeQuery();
 
-//    /**
-//     * @return Task[] Returns an array of Task objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        // returns an array of arrays (i.e. a raw data set)
+        return $sqlResult->fetchAllAssociative();
 
-//    public function findOneBySomeField($value): ?Task
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    }
 }

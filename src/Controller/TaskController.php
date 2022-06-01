@@ -72,4 +72,11 @@ class TaskController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('index');
     }
+    #[Route('/updateTaskUrgent/{id}', name: 'updateTaskUrgent')]
+    public function updateTaskUrgent( EntityManagerInterface $em, Task $TaskToUpdate): Response
+    {
+        $TaskToUpdate->setUrgent(!$TaskToUpdate->getUrgent());
+        $em->flush();
+        return $this->redirectToRoute('index');
+    }
 }

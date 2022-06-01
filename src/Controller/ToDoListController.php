@@ -21,12 +21,14 @@ class ToDoListController extends AbstractController
 
         $lists = $toDoListRepository->findAll();
         $checked = $toDoListRepository->findToDOListWithValidTask();
+        $urgent = $taskRepository->findByUrgent();
 
 
         return $this->render('to_do_list/index.html.twig', [
             'controller_name' => 'DefaultController',
             'lists'=>$lists,
-            'checked'=>$checked
+            'checked'=>$checked,
+            'urgenttasks'=>$urgent
 
         ]);
     }

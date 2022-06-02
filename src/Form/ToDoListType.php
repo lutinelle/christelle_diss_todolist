@@ -13,7 +13,7 @@ class ToDoListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class,['label' => 'Entrez le nom de la nouvelle liste '])
+            ->add('name',TextType::class,['label' => 'Nom de la nouvelle liste '])
         ;
     }
 

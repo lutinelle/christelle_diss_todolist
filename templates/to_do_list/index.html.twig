@@ -19,7 +19,7 @@
                             <div class="col-auto">
                                 <div class="list-header row mb-2">
                                     <div class="col-auto list-title">
-                                        <h5 class="card-title " id={{ list.Id }}>{{ list.name }}</h5>
+                                        <h5 class="card-title " id="list{{ list.Id }}">{{ list.name }}</h5>
                                     </div>
 
                                     <!--groupe icones d'action trash et edit-->
@@ -66,9 +66,9 @@
 
                         <div clas="row task">
                             <div class="form-check col task">
-                                <input class="form-check-input" type="checkbox" value="" id={{ task.Id }} {{ task.state? "checked" }}
+                                <input class="form-check-input" type="checkbox" value="" id="{{ task.Id }}" {{ task.state? "checked" }}
                                 onchange="window.location.href='/updateTaskState/{{ task.id }}'">
-                                <label class="form-check-label " for={{ task.Id }}>
+                                <label class="form-check-label " for="{{ task.Id }}">
                                     {{ task.Name }}
                                 </label>
                             </div>
@@ -123,7 +123,7 @@
 
                                     <div clas="row task">
                                         <div class="form-check col task">
-                                            <i class="bi bi-dot"></i>{{ task.name }} <a href="#{{ task.listid }}"  >({{ task.listename }})</a>
+                                            <i class="bi bi-dot"></i>{{ task.name }} <a href="#list{{ task.listid }}"  >({{ task.listename }})</a>
 
                                             </label>
                                         </div>

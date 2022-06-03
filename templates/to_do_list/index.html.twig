@@ -71,23 +71,24 @@
                                 <label class="form-check-label " for="{{ task.Id }}">
                                     {{ task.Name }}
                                 </label>
-                            </div>
+
 
                             <!--groupe icones d'action trash et edit-->
-                            <div class="btn-group col " role="group" aria-label="Basic example" >
-                                <a href="/delTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                                <i class="bi bi-trash-fill"></i>
-                                </a>
-                                <a href="/updateTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                                <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="/updateTaskUrgent/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
-                                    {% if task.urgent %}
-                                    <i class="bi bi-exclamation-circle-fill btn-outline-danger"></i>
-                                    {% else %}
-                                        <i class="bi bi-exclamation-circle"></i>
-                                    {% endif %}
-                                </a>
+                                <div class="btn-group col " role="group" aria-label="Basic example" >
+                                    <a href="/delTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                    <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                    <a href="/updateTask/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                    <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="/updateTaskUrgent/{{ task.Id }}" class="btn ps-0 pt-0" role="button" aria-pressed="true">
+                                        {% if task.urgent %}
+                                        <i class="bi bi-exclamation-circle-fill btn-outline-danger"></i>
+                                        {% else %}
+                                            <i class="bi bi-exclamation-circle"></i>
+                                        {% endif %}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}

@@ -8,10 +8,14 @@
 }
 
 .card{
-
-    width: 30rem;
-
+    width: 97%;
 }
+
+@media screen and (min-width: 512px) {
+    .card{
+        width: 30rem;
+    }
+
 .add-card{
     height: 10rem;
     border-style: dashed;

@@ -12,9 +12,10 @@
 }
 
 @media screen and (min-width: 512px) {
-    .card{
+    .card {
         width: 30rem;
     }
+}
 
 .add-card{
     height: 10rem;
